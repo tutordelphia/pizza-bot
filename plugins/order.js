@@ -14,6 +14,11 @@ module.exports = {
 
 function setUpConvo(err, convo) {
   convo.addMessage('some text', 'thread_1')
+
+  convo.addQuestion('Enter a store ID:', (responseObj) => {
+    convo.setVar("selectedID", responseObj)
+    console.log(convo.vars.selectedID)
+  }, "select-stores")
   convo.addQuestion('What is your address?', (responseObj) => {
     //console.log(responseObj)
     convo.setVar("address", responseObj)
@@ -21,6 +26,7 @@ function setUpConvo(err, convo) {
       convo.setVar("stores", stores)
       convo.addMessage(`Here are some nearby stores: {{#vars.stores}}\r\n{{StoreID}}: {{AddressDescription}} {{/vars.stores}}`, `list-stores`)
       convo.gotoThread('list-stores')
+      convo.gotoThread('select-stores')
     })
     //convo.addMessage(results, 'show_results')
 
